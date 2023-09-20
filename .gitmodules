@@ -1,0 +1,6 @@
+[submodule "deps/mini-yaml"]
+	path = deps/mini-yaml
+	url = https://github.com/jimmiebergmann/mini-yaml
+[submodule "deps/mINI"]
+	path = deps/mINI
+	url = https://github.com/pulzed/mINI

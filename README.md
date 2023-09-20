@@ -1,36 +1,3 @@
-# Contents Table
-- [Contents Table](#contents-table)
-- [What's Needlemake?](#whats-needlemake)
-	- [About Needlemake](#about-needlemake)
-	- [With What Does It Accomplish This?](#with-what-does-it-accomplish-this)
-		- [Why Not Just Use HedgeArcPack?](#why-not-just-use-hedgearcpack)
-- [Using Needlemake](#using-needlemake)
-	- [Installing Prebuilt Binaries For Needlemake](#installing-prebuilt-binaries-for-needlemake)
-	- [Building And Compiling Yourself](#building-and-compiling-yourself)
-		- [What You'll Need With An Asterisk](#what-youll-need-with-an-asterisk)
-		- [The Problem](#the-problem)
-		- [Why Not MSVC?](#why-not-msvc)
-		- [Introducing Cygwin](#introducing-cygwin)
-		- [Tiny Problem](#tiny-problem)
-		- [Now We Compilin'](#now-we-compilin)
-	- [Setting Up Needlemake](#setting-up-needlemake)
-		- [The Configuration File](#the-configuration-file)
-		- [The Toolset](#the-toolset)
-	- [Using Needlemake *Finally*](#using-needlemake-finally)
-		- [The Project File](#the-project-file)
-		- [Terminal Usage](#terminal-usage)
-			- [Actions](#actions)
-			- [Options](#options)
-				- [Projects](#projects)
-				- [Flags](#flags)
-			- [Example Usage](#example-usage)
-	- [How To Contribute](#how-to-contribute)
-		- [Dependencies](#dependencies)
-		- [Code Styling](#code-styling)
-			- [Lines](#lines)
-			- [Indentation](#indentation)
-
-
 # What's Needlemake?
 Needlemake is a headless "build system" in the style of Premake5, except instead of building software, it builds mods for Hedgehog Engine games automatically. Support for non-HE games that use CPK disk files and the same style of packages that HE games use, such as Platinum Games' Bayonetta, Metal Gear Rising and Nier Automata is being considered.
 
@@ -57,10 +24,15 @@ TODO
 
 # Using Needlemake
 
+
 ## Installing Prebuilt Binaries For Needlemake
-Not a thing *yet.*
+You can find a binary for Needlemake along with an MSI file for the same binary in the [releases page.](https://github.com/ChloeZamorano/needlemake/releases)
+
+The binary *should* be identical to what you'd get compiling it yourself in the debug configuration, and the MSI file simply places this same binary in `Program Files/needlemake/needlemake.exe`, as well as a configuration file in `%appdata%/chloeware/chloeconf.yml` and adds `Program Files/needlemake` to the system PATH variable for you to use needlemake in any directory like built-in commands.
 
 ## Building And Compiling Yourself
+If you don't trust my binaries, then you can compile Needlemake yourself, here how:
+
 ### What You'll Need With An Asterisk
 Building and compiling Needlemake is the simplest thing you could do, specially building as I'm including [Premake5](https://premake.github.io/) since you can't just install it on Windows like you could in Linux by typing say `sudo pacman -Syu premake`, but you'll need to install [GCC](https://gcc.gnu.org/) and (GNU Make)[https://www.gnu.org/software/make/], and that should allow you to compile Needlemake running two simple commands.
 

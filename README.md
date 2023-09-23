@@ -4,7 +4,7 @@ Needlemake is a headless "build system" in the style of Premake5, except instead
 ## About Needlemake
 Needlemake basically reads a project file that describes metadata about your mod and the files it overrides/adds to the game, fetches the files and puts them in your project for you to edit, and afterwards packs them into the mod's folder automatically skipping files marked to be excluded.
 
-## How Aoes It Work?
+## How Does It Work?
 Needlemake will use [mini-yaml](https://github.com/jimmiebergmann/mini-yaml) to read a [YAML](https://yaml.org/) project file mentioned in the previous section, as well as the configuration file that contains paths to the relevant folders for the tool to work its magic.
 
 Once the project file is all parsed correctly, Needlemake -using paths to the relevant folders in the settings file- goes and unpacks the disks of the game, and then unpacks the package files within in an intermediate directory, then the files in the overrides for that package are copied over to the project folder for you to edit and add any files you like

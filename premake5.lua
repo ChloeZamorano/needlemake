@@ -26,9 +26,9 @@ workspace "needlemake"
 		targetdir ("%{wks.location}/bin/"..OUTDIR.."/%{prj.name}")
 		objdir ("%{wks.location}/obj/"..OUTDIR.."/%{prj.name}")
 
-		files { "deps/mini-yaml/yaml/Yaml.cpp" }
+		files { "./deps/mini-yaml/yaml/Yaml.cpp" }
 
-		includedirs { "deps/mini-yaml/yaml" }
+		includedirs { "./deps/mini-yaml/yaml" }
 		symbols "Off"
 		buildoptions ("-Ofast")
 
@@ -48,18 +48,18 @@ workspace "needlemake"
 
 		files
 		{
-			"main.cpp",
+			"./code/main.cpp",
 
-			"src/**.cpp",
-			"src/**.c",
+			"./code/src/**.cpp",
+			"./code/src/**.c",
 			
-			"pch.hpp"
+			"./code/pch.hpp"
 		}
 
 		includedirs
 		{
-			".",
-			"inc/",
+			"./code",
+			"./code/inc/",
 			"deps/mini-yaml/yaml",
 			"deps/mINI/src/mini"
 		}

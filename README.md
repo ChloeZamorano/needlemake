@@ -139,7 +139,7 @@ disks:
             - ctp_cmn_body_001a_main_abd.dds
             - ctp_cmn_body_001b_main_abd.dds
             - ctp_cmn_body_001c_main_abd.dds
-		  excludes: # These files will be deleted from the intermediate directory before repacking.
+          excludes: # These files will be deleted from the intermediate directory before repacking.
             - ctp_cmn_body_001_main_nrm.dds
             - ctp_cmn_body_001_main_prm.dds
       ctp_pattern:

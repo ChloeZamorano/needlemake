@@ -20,7 +20,11 @@ Once you've made all your changes to the package -and any miscellaneous files th
 	* Sonic Frontiers: None at the moment, the code has an entry for this game but the path for the tool is never even set to anything.
 
 ### Why Not Just Use HedgeArcPack?
-TODO
+So HAP (HedgeArcPack) supports is pretty much a no-brainer choice, and if you're asking this question you probably know why. So why don't I use that instead? Well I have my reasons, none are to be disclosed here.
+
+If you know of some tool for Sonic Frontiers' package files, do message me on [my many socials](https://chloecake.com/cont) as I do want to support it, except if you're gonna recommend HAP, I'm just gonna ignore it. I'm not accepting merge requests that use HAP either.
+
+Kindly do not go into Twitter, my DMs or my Discord/Revolt server to bother me about this. You're free to fork Needlemake under the terms of the [license](./LICENSE) with HAP, this is an open source project after all.
 
 # Using Needlemake
 

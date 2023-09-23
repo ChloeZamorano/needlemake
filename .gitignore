@@ -1,9 +1,6 @@
-./.vscode
+./.vscode/**
 
-./bin
-./obj
+./proj/bin/**
 
 ./Makefile
 ./**.make
-
-./test.bat

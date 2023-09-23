@@ -64,22 +64,19 @@ typedef char* 		cstr;
 // Macro Functions
 //
 #define NDL_ADLER32(data, length)			\
-({											\
+[](const u8* d, const u64 l) -> u32 {		\
 	u32 adlerA = 1;							\
 	u32 adlerB = 0;							\
-	const unsigned char* ptr =				\
-		reinterpret_cast<const u8*>(		\
-		const_cast<const u8*>(data));		\
-	const u8* end = ptr + length;			\
+	const u8* end = d + l;					\
 											\
-	while (ptr < end)						\
+	while (d < end)							\
 	{										\
-		adlerA = (adlerA + *ptr++) % 65521;	\
+		adlerA = (adlerA + *d++) % 65521;	\
 		adlerB = (adlerB + adlerA) % 65521;	\
 	}										\
 											\
-	(adlerB << 16) | adlerA;				\
-})                                          \
+	return (adlerB << 16) | adlerA;			\
+}(data, length)								\
 
 #define NDL_SWAP_8(x) (x)
 #define NDL_SWAP_16(x) ((x << 8) | (x >> 8))

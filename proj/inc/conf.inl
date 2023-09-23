@@ -3,8 +3,8 @@
 
 inline std::filesystem::path ProjectDir;
 
-inline std::filesystem::path ConfDir =
-	std::string(std::getenv("APPDATA")) + "/chloeware";
+inline std::filesystem::path Conf =
+	std::string(std::getenv("APPDATA")) + "/chloeware/chloeconf.yml";
 inline std::filesystem::path ToolsDir =
 	std::filesystem::path(std::getenv("LOCALAPPDATA")) / "Programs/needlemake";
 

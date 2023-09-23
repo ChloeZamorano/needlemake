@@ -13,6 +13,9 @@
 #include "options.inl"
 #include "disk_unpacker.hpp"
 #include "mod.hpp"
+#include "status.hpp"
+
+#define NEEDLEMAKE_VERSION "0.1.1b"
 
 Result program()
 {
@@ -21,7 +24,7 @@ Result program()
 	try
 	{
 		Yaml::Node root;
-		Yaml::Parse(root, (ConfDir / "chloeconf.yml").string().c_str());
+		Yaml::Parse(root, Conf.string().c_str());
 
 		BlueblurDisksDir	= root["needlemake"]["blueblur"]["disks_dir"].	As<std::string>();
 		BlueblurIntDir		= root["needlemake"]["blueblur"]["int_dir"].	As<std::string>();
@@ -63,7 +66,7 @@ Result program()
 		root["needlemake"]["wars"]["mods_dir"] =
 			"C:/Path\\to/Sonic\\Forces/mods\\directory/";
 
-		Yaml::Serialize(root, (ConfDir / "chloeconf.yml").string().c_str());
+		Yaml::Serialize(root, Conf.string().c_str());
 		
 		return Result(
 			ErrorCode::ConfigFileMissing,
@@ -72,47 +75,6 @@ Result program()
 			"The file itself contains the instructions to fill it out."
 		);
 	}
-
-	// TODO: Find out why these aren't downloading correctly.
-	#define DOWNLOAD_STD(path, url)								\
-	if(!std::filesystem::exists(path))							\
-	{															\
-		std::filesystem::create_directories(ToolsDir);			\
-		Util::RunExternal("curl", { "-L", "-o", path.string(), url });\
-	}															\
-	
-	//DOWNLOAD_STD(CpkMaker,	"https://raw.githubusercontent.com/blueskythlikesclouds"
-	//	"/SkythTools/master/Common/CpkMaker.dll")
-	//DOWNLOAD_STD(PackCpk,	"https://raw.githubusercontent.com/blueskythlikesclouds"
-	//	"/SkythTools/master/Common/PackCpk.dll")
-	//DOWNLOAD_STD(ar0pack,	"https://raw.githubusercontent.com/blueskythlikesclouds"
-	//	"/SkythTools/master/Sonic+Generations/ar0pack.exe")
-	//DOWNLOAD_STD(ar0unpack,	"https://raw.githubusercontent.com/blueskythlikesclouds"
-	//	"/SkythTools/master/Sonic+Generations/ar0unpack.exe")
-	//DOWNLOAD_STD(pacpack,	"https://github.com/DarioSamo/libgens-sonicglvl/blob"
-	//	"/master/bin/pacpack.exe")
-		
-	#undef DOWNLOAD_STD
-
-	//if(!std::filesystem::exists(SFPac))
-	//{
-	//	std::filesystem::create_directories(ToolsDir);
-	//	Util::RunExternal("curl", {
-	//		"-L", "-o", SFPacZip,
-	//		// Why zipped :(
-	//		"https://docs.google.com/uc?export=download&id=1kunzqJIsz5Tzr5zmHb-AaC2Bj516nJoT"
-	//	});
-	//	std::filesystem::current_path(ToolsDir);
-	//	Util::RunExternal("tar", { "-xf", SFPacZip });
-	//	std::filesystem::current_path(ProjectDir);
-	//	std::filesystem::remove(SFPacZip);
-	//}
-	
-	Result r;
-
-	r = Project::Load();
-	if(r.Error != ErrorCode::Success) return r;
-
 	
 	if(CmdOptions.CleanMod)
 		std::filesystem::remove_all(ModsDir / Project::pathName / "disk");
@@ -124,13 +86,66 @@ Result program()
 	
 	switch(CmdAction)
 	{
+	case Action::Status:
+		Status::Build::Print();
+		Status::Config::Print();
+		Status::Toolset::Print();
+		return Result();
+	case Action::DownloadToolset:
+		std::filesystem::remove(CpkMaker);
+		std::filesystem::remove(PackCpk);
+		std::filesystem::remove(ar0pack);
+		std::filesystem::remove(ar0unpack);
+		std::filesystem::remove(pacpack);
+		std::filesystem::remove(SFPacZip);
+		std::filesystem::remove(SFPac);
+
+		#define NDL_DOWNLOAD_TOOL(path, url)											\
+			std::cout << ANSI::BG_BrightGreen << ANSI::FG_Black <<						\
+				"Curling " << path.filename().string() << "..." << ANSI::Reset << "\n";	\
+			std::filesystem::create_directories(ToolsDir);								\
+			Util::Shell("curl", { "-L", "-o", const_cast<char*>(path.c_str()), url });	\
+
+		NDL_DOWNLOAD_TOOL(CpkMaker, "https://github.com/blueskythlikesclouds/"
+			"SkythTools/raw/master/Common/CpkMaker.dll")
+		NDL_DOWNLOAD_TOOL(PackCpk, "https://github.com/blueskythlikesclouds/"
+			"SkythTools/raw/master/Common/PackCpk.exe")
+		NDL_DOWNLOAD_TOOL(ar0pack, "https://github.com/blueskythlikesclouds/"
+			"/SkythTools/raw/master/Sonic+Generations/ar0pack.exe")
+		NDL_DOWNLOAD_TOOL(ar0unpack, "https://github.com/blueskythlikesclouds/"
+			"/SkythTools/raw/master/Sonic+Generations/ar0unpack.exe")
+		NDL_DOWNLOAD_TOOL(pacpack, "https://github.com/DarioSamo"
+			"/libgens-sonicglvl/raw/master/master/bin/pacpack.exe")
+
+		#undef NDL_DOWNLOAD_TOOL
+			
+		if(!std::filesystem::exists(SFPac))
+		{
+			std::cout << ANSI::BG_BrightGreen << ANSI::FG_Black <<
+				"Curling and unzipping SFPac..." << ANSI::Reset << "\n";
+			std::filesystem::create_directories(ToolsDir);
+			Util::Shell("curl", {
+				"-L", "-o", const_cast<char*>(SFPacZip.c_str()),
+				// Why zipped :(
+				"https://docs.google.com/uc?export=download&id=1kunzqJIsz5Tzr5zmHb-AaC2Bj516nJoT"
+			});
+			std::filesystem::current_path(ToolsDir);
+			Util::Shell("unzip", { 
+				const_cast<char*>(SFPacZip.filename().c_str()) });
+			std::filesystem::current_path(ProjectDir);
+		}
+		if(std::filesystem::exists(SFPacZip))
+			std::filesystem::remove(SFPacZip);
+		return Result();
 	case Action::Help:
 		std::cout << HelpSource << "\n";
 		return Result();
 	case Action::MakeProject:
+		Project::Load();
 		Project::Make();
 		return Result();
 	case Action::BuildMod:
+		Project::Load();
 		Mod::Build();
 		return Result();
 	default:

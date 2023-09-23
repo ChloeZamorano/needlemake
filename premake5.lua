@@ -15,7 +15,7 @@ workspace "needlemake"
 	}
 
 	OUTDIR = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
-	BUILDOPS = "-Wall -Werror -Wextra -pedantic -pedantic-errors -Wno-trigraphs -Wno-error=unused-variable -Wno-error=unused-parameter -Wno-error=missing-field-initializers -Wno-error=sign-compare"
+	BUILDOPS = "-Wall -Werror -Wextra -pedantic -pedantic-errors -Wno-trigraphs -Wno-error=unused-variable -Wno-error=unused-parameter -Wno-error=missing-field-initializers -Wno-error=sign-compare -Wno-write-strings -fpermissive"
 
 	project "mini-yaml"
 		kind "StaticLib"
@@ -23,8 +23,8 @@ workspace "needlemake"
 		cppdialect "C++20"
 		cdialect "C17"
 
-		targetdir ("%{wks.location}/bin/"..OUTDIR.."/%{prj.name}")
-		objdir ("%{wks.location}/obj/"..OUTDIR.."/%{prj.name}")
+		targetdir ("%{wks.location}/proj/bin/"..OUTDIR.."/%{prj.name}")
+		objdir ("%{wks.location}/proj/bin/obj/"..OUTDIR.."/%{prj.name}")
 
 		files { "./deps/mini-yaml/yaml/Yaml.cpp" }
 
@@ -38,8 +38,8 @@ workspace "needlemake"
 		cppdialect "C++20"
 		cdialect "C17"
 
-		targetdir ("%{wks.location}/bin/"..OUTDIR.."/%{prj.name}")
-		objdir ("%{wks.location}/obj/"..OUTDIR.."/%{prj.name}")
+		targetdir ("%{wks.location}/proj/bin/"..OUTDIR.."/%{prj.name}")
+		objdir ("%{wks.location}/proj/bin/obj/"..OUTDIR.."/%{prj.name}")
 
 		links
 		{
@@ -48,18 +48,18 @@ workspace "needlemake"
 
 		files
 		{
-			"./code/main.cpp",
+			"./proj/main.cpp",
 
-			"./code/src/**.cpp",
-			"./code/src/**.c",
+			"./proj/src/**.cpp",
+			"./proj/src/**.c",
 			
-			"./code/pch.hpp"
+			"./proj/pch.hpp"
 		}
 
 		includedirs
 		{
-			"./code",
-			"./code/inc/",
+			"./proj",
+			"./proj/inc/",
 			"deps/mini-yaml/yaml",
 			"deps/mINI/src/mini"
 		}

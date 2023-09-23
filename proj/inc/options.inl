@@ -3,10 +3,12 @@
 
 #define X(x) x,
 
-#define ENTRIES		\
-	X(Help)			\
-	X(MakeProject)	\
-	X(BuildMod)		\
+#define ENTRIES				\
+	X(Help)					\
+	X(MakeProject)			\
+	X(BuildMod)				\
+	X(DownloadToolset)		\
+	X(Status)				\
 
 enum class Action : u32
 {

@@ -156,11 +156,13 @@ disks:
 Now that you have your configuration, your toolset and your project file, you need to run needlemake in the directory where you have your project file, though that's not necessary though but more on that later.
 
 #### Actions
-The first argument should never be empty, and it's an action, an action is, as the name implies, what the tool will do on this run, and there are three of them, here they are with an explanation of exactly what they do:
+The first argument should never be empty, and it's an action, an action is, as the name implies, what the tool will do on this run, and there are five of them, here they are with an explanation of exactly what they do:
 
 - Help: Will print a help page.
 - MakeProject: This will extract all the packages referenced in the project file, from the disks directory -or DLC disks directory if it applies-, and they will be moved to the intermediate directory. The miscellaneous files and package sub-files marked as an override will then be copied to your project folder with the same directory structure, unless the file already exists.
 - BuildMod: With this action, all the folders representing packages in your project's directory, will be copied over to the intermediate directory, any file conflicts will be resolved keeping the file from the project. Next, the packages in the intermediate directory will be packed again with the appropriate tool before deleting any files marked as an exclude, and they will be copied to the mods directory, as well as the miscellaneous files in your project. The mod.ini file will be updated with the information in the project file, unless it doesn't exist, then it will be created automatically with default values in the Main category.
+- DownloadToolset: Will delete the entire toolset and download it again.
+- Status: Prints the status of your install, along with information about the build. As of version 0.1.1a, the status is all the paths in the configuration file and the status of each tool: Green text means the tool's good, bright magenta background means the file doesn't match the correct hash and may be corrupted, red background means the file's missing, and magenta (non-bright) background means this tool doesn't exist.
 
 #### Options
 All other arguments after the first one are referred to as an option, and they will be interpreted as a flag or a project, they always begin with a dash, and here's how you use them:

@@ -5,6 +5,24 @@
 
 namespace Util
 {
+inline u32 FileHashAdler32(const std::string &fp)
+{
+		std::ifstream file(fp, std::ifstream::binary);
+
+		file.seekg (0, file.end);
+		u32 len = file.tellg();
+		file.seekg (0, file.beg);
+
+		u8 *buf = new u8[len];
+
+		file.close();
+		
+		u32 hash = NDL_ADLER32(buf, len);
+		delete buf;
+
+		return hash;
+}
+
 inline std::string C_TimeToString(std::tm &tm)
 {
 	std::stringstream ss;
